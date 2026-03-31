@@ -16,7 +16,7 @@ function App() {
     <Router>
       <div className="app">
         <nav className="navbar">
-          <h1>Employee Management System</h1>
+          <h1>Employee Management System By Siddhant Rathod</h1>
           <div className="nav-links">
             <Link 
               to="/" 
