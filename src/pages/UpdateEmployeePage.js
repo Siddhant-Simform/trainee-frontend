@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const API_BASE_URL = '/api';
+const API_URL = process.env.REACT_APP_API_BASE_URL;
 
 function UpdateEmployeePage() {
   const [employeeId, setEmployeeId] = useState('');
@@ -40,7 +40,7 @@ function UpdateEmployeePage() {
       setError('');
       setSuccess('');
 
-      const response = await axios.get(`${API_BASE_URL}/employees`);
+      const response = await axios.get(`${API_URL}/employees`);
       const employee = response.data.data.find(emp => emp.id === parseInt(employeeId));
 
       if (employee) {
@@ -87,7 +87,7 @@ function UpdateEmployeePage() {
       setSuccess('');
 
       const response = await axios.put(
-        `${API_BASE_URL}/employees/${employeeId}`,
+        `${API_URL}/employees/${employeeId}`,
         formData
       );
 
@@ -140,8 +140,8 @@ function UpdateEmployeePage() {
               min="1"
             />
           </div>
-          <button 
-            className="btn btn-primary" 
+          <button
+            className="btn btn-primary"
             onClick={handleFetchEmployee}
             disabled={loading || !employeeId}
           >
@@ -211,16 +211,16 @@ function UpdateEmployeePage() {
             </div>
 
             <div className="btn-group">
-              <button 
-                type="submit" 
-                className="btn btn-primary" 
+              <button
+                type="submit"
+                className="btn btn-primary"
                 disabled={loading}
               >
                 {loading ? 'Updating...' : 'Update Employee'}
               </button>
-              <button 
-                type="button" 
-                className="btn btn-secondary" 
+              <button
+                type="button"
+                className="btn btn-secondary"
                 onClick={handleReset}
                 disabled={loading}
               >

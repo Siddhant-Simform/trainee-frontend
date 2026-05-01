@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const API_BASE_URL = '/api';
+const API_URL = process.env.REACT_APP_API_BASE_URL;
 
 function GetEmployeesPage() {
   const [employees, setEmployees] = useState([]);
@@ -18,9 +18,11 @@ function GetEmployeesPage() {
       setLoading(true);
       setError('');
       setSuccess('');
-      
-      const response = await axios.get(`${API_BASE_URL}/employees`);
-      
+      // src/App.js or index.js - remove after debugging
+      console.log("API BASE:", process.env.REACT_APP_API_BASE_URL);
+      console.log(`Fetching employees from ${API_URL}/employees...`);
+      const response = await axios.get(`${API_URL}/employees`);
+
       if (response.data.success) {
         setEmployees(response.data.data);
         setSuccess('Employees loaded successfully!');
@@ -29,6 +31,7 @@ function GetEmployeesPage() {
         setError('Failed to fetch employees');
       }
     } catch (err) {
+      console.error('Error fetching employees:', err);
       setError(err.response?.data?.message || err.message || 'Error fetching employees');
     } finally {
       setLoading(false);

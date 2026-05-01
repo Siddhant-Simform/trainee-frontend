@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const API_BASE_URL = '/api';
+const API_URL = process.env.REACT_APP_API_BASE_URL;
 
 function CreateEmployeePage() {
   const [formData, setFormData] = useState({
@@ -25,7 +25,7 @@ function CreateEmployeePage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Validation
     if (!formData.name.trim()) {
       setError('Name is required');
@@ -41,7 +41,7 @@ function CreateEmployeePage() {
       setError('');
       setSuccess('');
 
-      const response = await axios.post(`${API_BASE_URL}/employees`, formData);
+      const response = await axios.post(`${API_URL}/employees`, formData);
 
       if (response.data.success) {
         setSuccess('Employee created successfully!');
@@ -145,16 +145,16 @@ function CreateEmployeePage() {
           </div>
 
           <div className="btn-group">
-            <button 
-              type="submit" 
-              className="btn btn-primary" 
+            <button
+              type="submit"
+              className="btn btn-primary"
               disabled={loading}
             >
               {loading ? 'Creating...' : 'Create Employee'}
             </button>
-            <button 
-              type="button" 
-              className="btn btn-secondary" 
+            <button
+              type="button"
+              className="btn btn-secondary"
               onClick={handleReset}
               disabled={loading}
             >

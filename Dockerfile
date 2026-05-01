@@ -8,11 +8,15 @@ COPY . .
 RUN npm run build
 
 FROM nginx:alpine
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+
+# remove default config
 RUN rm -rf /usr/share/nginx/html/*
+
+# copy build
 COPY --from=build /app/build /usr/share/nginx/html
-RUN chown -R appuser:appgroup /usr/share/nginx/html
-USER appuser
+
+# FIX: allow nginx to write pid
+RUN mkdir -p /run && chmod 777 /run
 
 EXPOSE 80
 
